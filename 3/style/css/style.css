@@ -1,0 +1,80 @@
+header {
+	/*border: 1px solid blue;*/
+	background-color: white;
+	height: 200px;
+	background: white url(/image/banniere.png) no-repeat;
+}
+
+header a
+{
+	background: url(/image/epsi.jpg) no-repeat;
+	position: relative;
+	height: 70px;
+	width: 397px;
+	display: block;
+	margin-left: 350px;
+	margin-top: 70px;
+	text-indent: -2000px;
+}
+nav
+{
+	text-align: center;
+}
+#nav{
+	margin-top: 10px;
+	margin-bottom: 25px;
+	background-color: orange;
+	padding: 15px;
+}
+
+tr, th, td
+{
+	border: 1px solid black;
+}
+li
+{
+	position: relative;
+}
+ul {
+	margin-left: 0;
+	padding-left: 0;
+	display: inline;
+}
+ul li {
+	margin-left: 0;
+	padding: 3px 15px;
+	list-style: none;
+	display: inline;
+	font-size: 150%;
+}
+ul li:hover {
+	margin-left: 0;
+	padding: 3px 15px;
+	list-style: none;
+	font-weight: bold;
+	display: inline;
+}
+
+nav form {
+border: 2px solid grey;
+text-align: right;
+float: right;
+border-radius: 10px;
+}
+
+#connexion {
+	border: 2px solid grey;
+	text-align: right;
+	float: right;
+	border-radius: 10px;
+}
+
+#piedPage{
+	text-align: center;
+}
+
+
+/*#carousel{
+	margin-left: 50%;
+	position: relative;
+}*/
