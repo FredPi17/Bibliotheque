@@ -1,0 +1,245 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Client :  127.0.0.1
+-- Généré le :  Jeu 19 Janvier 2017 à 16:25
+-- Version du serveur :  10.1.16-MariaDB
+-- Version de PHP :  7.0.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de données :  `bibliotheque`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `appartient`
+--
+
+CREATE TABLE `appartient` (
+  `IDobjet` int(11) NOT NULL,
+  `IDcategorie` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `appartient`
+--
+
+INSERT INTO `appartient` (`IDobjet`, `IDcategorie`) VALUES
+(1, 1),
+(2, 3),
+(3, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auteur`
+--
+
+CREATE TABLE `auteur` (
+  `IDauteur` int(11) NOT NULL,
+  `Nom` varchar(100) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `auteur`
+--
+
+INSERT INTO `auteur` (`IDauteur`, `Nom`) VALUES
+(1, 'Tolkien'),
+(2, 'Ian Kershow'),
+(3, 'François Branger'),
+(19, 'Arthur Conan Doyle, ');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories`
+--
+
+CREATE TABLE `categories` (
+  `IDcategorie` int(11) NOT NULL,
+  `Libelle` varchar(100) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `categories`
+--
+
+INSERT INTO `categories` (`IDcategorie`, `Libelle`) VALUES
+(1, 'Fantastique'),
+(2, 'ScienceFiction'),
+(3, 'Historique');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `note`
+--
+
+CREATE TABLE `note` (
+  `IDobjet` int(11) NOT NULL,
+  `IDutilisateur` int(11) NOT NULL,
+  `Commentaire` varchar(500) COLLATE utf8_bin NOT NULL DEFAULT 'Pas de commentaire',
+  `etoiles` int(5) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `note`
+--
+
+INSERT INTO `note` (`IDobjet`, `IDutilisateur`, `Commentaire`, `etoiles`) VALUES
+(1, 1, 'cool', 4),
+(1, 2, 'Il était génial !', 0),
+(2, 2, 'Il était nul', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `objet`
+--
+
+CREATE TABLE `objet` (
+  `IDobjet` int(11) NOT NULL,
+  `ISBN` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Titre` varchar(100) COLLATE utf8_bin NOT NULL,
+  `IDauteur` int(11) NOT NULL,
+  `image` varchar(150) COLLATE utf8_bin DEFAULT NULL,
+  `Resume` longtext COLLATE utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `objet`
+--
+
+INSERT INTO `objet` (`IDobjet`, `ISBN`, `Titre`, `IDauteur`, `image`, `Resume`) VALUES
+(1, '9782266154116', 'Le Seigneur des Anneaux', 1, NULL, 'blibli'),
+(2, '9782021243642', 'Europe en Enfer', 2, NULL, 'bleble'),
+(3, '9782266258692', 'Dominium Mundi', 3, NULL, 'blabla'),
+(10, '9782253003144', 'Le Chien Des Baskerville', 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reservation`
+--
+
+CREATE TABLE `reservation` (
+  `IDobjet` int(11) NOT NULL,
+  `IDutilisateur` int(11) NOT NULL,
+  `Datedébut` date NOT NULL,
+  `Datefin` date NOT NULL,
+  `Emprunté` tinyint(1) NOT NULL DEFAULT '0',
+  `Rendu` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `reservation`
+--
+
+INSERT INTO `reservation` (`IDobjet`, `IDutilisateur`, `Datedébut`, `Datefin`, `Emprunté`, `Rendu`) VALUES
+(1, 2, '2016-12-08', '2016-12-09', 1, 0),
+(2, 1, '2016-12-09', '2016-12-10', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `utilisateur`
+--
+
+CREATE TABLE `utilisateur` (
+  `IDutilisateur` int(11) NOT NULL,
+  `MDP` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Mail` varchar(100) COLLATE utf8_bin NOT NULL,
+  `Nom` varchar(100) COLLATE utf8_bin NOT NULL,
+  `Prenom` varchar(100) COLLATE utf8_bin NOT NULL,
+  `Admin` tinyint(1) NOT NULL DEFAULT '0',
+  `image` varchar(150) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`IDutilisateur`, `MDP`, `Mail`, `Nom`, `Prenom`, `Admin`, `image`) VALUES
+(0, '48c4b0b5c6340db275614356ba2a1772f26a1ec9', 'hugo', 'hugo', 'hugo', 0, NULL),
+(1, 'az', '@epsi.fr', 'toto', 'fred', 0, ''),
+(2, 'er', '@idrac.fr', 'titi', 'hugo', 0, ''),
+(5, 'b97364f331e9e362b057bb17615c796f4c30b68b', 'hugolausenazpire@gmail.com', 'Lausenaz-Pire', 'Hugo', 0, ''),
+(6, 'f188de58e199551f7f067fd433b4267eb969e1c5', 'minedr3am@gmail.com', 'Test', 'Hugo', 0, NULL),
+(7, '9d068a4df2f6c4786a3bb79c43eca3e74c8abf61', 'justine.lausenazpire@gmail.com', 'Lausenaz', 'Justine', 0, NULL);
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `appartient`
+--
+ALTER TABLE `appartient`
+  ADD PRIMARY KEY (`IDobjet`,`IDcategorie`),
+  ADD KEY `IDcategorie` (`IDcategorie`);
+
+--
+-- Index pour la table `auteur`
+--
+ALTER TABLE `auteur`
+  ADD PRIMARY KEY (`IDauteur`);
+
+--
+-- Index pour la table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`IDcategorie`);
+
+--
+-- Index pour la table `note`
+--
+ALTER TABLE `note`
+  ADD PRIMARY KEY (`IDobjet`,`IDutilisateur`),
+  ADD KEY `IDutilisateur` (`IDutilisateur`);
+
+--
+-- Index pour la table `objet`
+--
+ALTER TABLE `objet`
+  ADD PRIMARY KEY (`IDobjet`),
+  ADD KEY `IDauteur` (`IDauteur`);
+
+--
+-- Index pour la table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`IDobjet`,`IDutilisateur`),
+  ADD KEY `IDutilisateur` (`IDutilisateur`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`IDutilisateur`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `auteur`
+--
+ALTER TABLE `auteur`
+  MODIFY `IDauteur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT pour la table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `IDcategorie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT pour la table `objet`
+--
+ALTER TABLE `objet`
+  MODIFY `IDobjet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;

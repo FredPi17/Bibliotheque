@@ -1,0 +1,279 @@
+footer{
+  vertical-align: bottom;
+}
+@media screen and (max-width: 720px)
+{
+  li{
+    text-decoration-style: none;
+    list-style: none;
+    color: black;
+  }
+  .bot, p{
+    display: inline-block;
+  }
+  footer{
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: orange;
+
+  }
+  .bot{
+    display: inline-flex;
+  }
+  p{
+    margin-bottom: : 10px;
+  }
+  table{
+    border: 1px solid black;
+    border-collapse: inherit;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%; /**Règle ta taille de carrousel /a width*/
+      margin: auto;
+  }
+  tr th{
+    width: auto;
+    padding: 5px;
+    text-align: center;
+  }
+  tr td{
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  article{
+    background-color: rgb(246,246,246);
+    margin: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  #tab{
+    background-color: white;
+  }
+  h3{
+    text-align: center;
+  }
+  div.card.card-user{
+    width: 90%;
+    height: auto;
+    padding: 5px;
+    border: 5px solid rgb(230,230,230);
+    border-radius: 20px;
+    margin-left: 6%;
+    margin-top: 10px;
+    background-color: rgb(246,246,246);
+    font-size: 15px;
+  }
+  img.avatar.border-gray{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin-top: 5px;
+    border: 5px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .info, .img.avatar.border-gray{
+    display: inline-block;
+  }
+  .info{
+    margin-left: 25px;
+    vertical-align: middle;
+  }
+  h1{
+    text-align: center;
+  }
+}
+@media screen and (min-width: 720px) and (max-width: 1125px)
+{
+  li{
+    text-decoration-style: none;
+    list-style: none;
+    color: black;
+    font-size: 20px;
+  }
+  .bot, p{
+    display: inline-block;
+  }
+  footer{
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: orange;
+  }
+  .bot{
+    display: inline-flex;
+  }
+  p{
+    margin-bottom: : 10px;
+  }
+  table{
+    border: 1px solid black;
+    border-collapse: inherit;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%; /**Règle ta taille de carrousel /a width*/
+      margin: auto;
+  }
+
+  tr th{
+    width: auto;
+    padding: 5px;
+    text-align: center;
+  }
+  tr td{
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  article{
+    background-color: rgb(246,246,246);
+    margin: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  #tab{
+    background-color: white;
+  }
+  h3{
+    text-align: center;
+  }
+  div.card.card-user{
+    width: 40%;
+    height: 400px;
+    padding: 5px;
+    border: 5px solid rgb(230,230,230);
+    border-radius: 20px;
+    margin-left: 10%;
+    display: inline-block;
+    margin-left: 6%;
+    margin-top: 10px;
+    background-color: rgb(246,246,246);
+    text-align: center;
+    vertical-align: top;
+  }
+  img.avatar.border-gray{
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    margin-top: 5px;
+    border: 5px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .info, .img.avatar.border-gray{
+    display: inline-block;
+  }
+  .info{
+    margin-left: 25px;
+    vertical-align: middle;
+  }
+  h1{
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1125px)
+{
+  li{
+    text-decoration-style: none;
+    list-style: none;
+    color: black;
+  }
+  .bot, p{
+    display: inline-block;
+  }
+  footer{
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: orange;
+  }
+  .bot{
+    display: inline-flex;
+  }
+  p{
+    margin-bottom: : 10px;
+  }
+  table{
+    border: 1px solid black;
+    border-collapse: inherit;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%; /**Règle ta taille de carrousel /a width*/
+      margin: auto;
+  }
+
+  tr th{
+    width: auto;
+    padding: 5px;
+    text-align: center;
+  }
+  tr td{
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  article{
+    background-color: rgb(246,246,246);
+    margin: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  #tab{
+    background-color: white;
+  }
+  h3{
+    text-align: center;
+  }
+  div.card.card-user{
+    width: 40%;
+    height: auto;
+    padding: 5px;
+    border: 5px solid rgb(230,230,230);
+    border-radius: 20px;
+    margin-left: 10%;
+    display: inline-block;
+    margin-left: 6%;
+    margin-top: 10px;
+    background-color: rgb(246,246,246);
+  }
+  img.avatar.border-gray{
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    margin-top: 5px;
+    border: 5px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .info, .img.avatar.border-gray{
+    display: inline-block;
+  }
+  .info{
+    margin-left: 25px;
+    vertical-align: middle;
+  }
+  h1{
+    text-align: center;
+  }
+}

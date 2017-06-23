@@ -1,0 +1,40 @@
+table{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 90%;
+  margin-left: 5%;
+}
+tr th{
+  width: auto;
+  padding: 5px;
+  text-align: center;
+}
+tr td{
+  text-align: center;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+h1{
+  text-align: center;
+}
+
+li{
+  text-decoration-style: none;
+  list-style: none;
+  color: black;
+}
+.bot, p{
+  display: inline-block;
+}
+footer{
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: orange;
+}
+.bot{
+  display: inline-flex;
+}
+p{
+  margin-bottom: : 10px;
+}

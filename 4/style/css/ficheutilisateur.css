@@ -1,0 +1,108 @@
+@media screen and (max-width: 720px)
+{
+  #logo{
+    width: 100%;
+  }
+  footer{
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: orange;
+    vertical-align: bottom;
+  }
+  li{
+    text-decoration-style: none;
+    list-style: none;
+    color: black;
+  }
+  .bot{
+    display: inline-flex;
+  }
+  table{
+    border: 1px solid black;
+    border-collapse: inherit;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  tr th{
+    width: auto;
+    padding: 5px;
+    text-align: center;
+  }
+  tr td{
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  td img{
+    display: none;
+  }
+  article{
+    background-color: rgb(246,246,246);
+    margin: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+}
+@media screen and (min-width: 1125px)
+{
+  li{
+    text-decoration-style: none;
+    list-style: none;
+    color: black;
+  }
+  .bot, p{
+    display: inline-block;
+  }
+  footer{
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: orange;
+    vertical-align: bottom;
+  }
+  .bot{
+    display: inline-flex;
+  }
+  p{
+    margin-bottom: : 10px;
+  }
+  table{
+    border: 1px solid black;
+    border-collapse: inherit;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%; /**Règle ta taille de carrousel /a width*/
+      margin: auto;
+  }
+
+  tr th{
+    width: auto;
+    padding: 5px;
+    text-align: center;
+  }
+  tr td{
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  article{
+    background-color: rgb(246,246,246);
+    margin: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  #tab{
+    background-color: white;
+  }
+  h3{
+    text-align: center;
+  }
+}
