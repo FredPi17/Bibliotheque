@@ -8,25 +8,23 @@
   <!-- Bootstrap -->
   <link href="style/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style/css/index.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <link rel="stylesheet" href="style/css/foundation.css">
   <link href="style/css/style.css" rel="stylesheet">
   <!--<link rel="stylesheet" href="style/bootstrap.min.css">-->
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- /**Le jquery ne se trouve pas dans le download boot strap on est obligé de le récupérer enligne!*/-->
-<script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <style>
-
+  .row.news{
+    border: 1px grey solid;
+    margin-top:4px;
+  }
+  .large-8.columns{
+    border-left: 1px solid grey;
+  }
 
   </style>
 </head>
 <body>
-
 
 <?php
 session_start();
@@ -42,21 +40,26 @@ echo Index();
 //echo Carrousel();
 
  ?>
- <div id="article">
-  <article id="article1">
-    <h1>Présentation</h1>
-    <div id="sommaire">
-      <p>Présentation du projet</p><br /> <p>Présentation du contexte</p><br /><p>Présentation de la structure du site</p>
+ <div class="ui main container" id="menu">
+   <div class="row">
+     <div class="callout">
+       <div class="row">
+         <div class="large-12 columns">
+           <div class="large-9 columns">
+              <h1>Présentation</h1>
+              <div id="sommaire">
+                <p>Présentation du projet</p><br /> <p>Présentation du contexte</p><br /><p>Présentation de la structure du site</p>
+              </div>
+            </div>
+            <div class="large-3 columns">
+                <?php echo last();?>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </article>
-  <article id="article2">
-    <h1> Dernieres sorties </h1>
-    <div class="new"><div class="photo">photo</div><div class="resum"><p>Résumé, note</p></div></div>
-    <div class="new"><div class="photo">photo</div><div class="resum"><p>Résumé, note</p></div></div>
-    <div class="new"><div class="photo">photo</div><div class="resum"><p>Résumé, note</p></div></div>
-    <div class="new"><div class="photo">photo</div><div class="resum"><p>Résumé, note</p></div></div>
-  </article>
-</div>
+  </div>
+</body>
 <?php
 echo piedPage();
 ?>

@@ -17,6 +17,7 @@
   <link href="style/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="style/bootstrap.min.css">
   <link rel="stylesheet" href="style/css/about.css">
+  <link rel="stylesheet" href="style/css/foundation.css">
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
 
@@ -34,10 +35,8 @@ echo menuConnexion();
 echo Menu();
 ?>
 <h1>Site crée par...</h1>
+
   <div class="card card-user">
-    <!--<div class="image">
-        <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
-    </div>-->
     <div class="content">
         <div class="author">
             <img class="avatar border-gray" src="image/fred.jpg" alt="..."/>
@@ -45,7 +44,6 @@ echo Menu();
               <h4 class="title">Frédéric Pinaud<br />
               </h4>
             </a>
-
         <p class="description"> "Etudiant B1 EPSI Grenoble" <br>
                             Site web: <a  href="http://fredericpinaud.fr">fredericpinaud.fr</a> <br>
                             Mail: frederic.pinaud@epsi.fr

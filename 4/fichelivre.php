@@ -8,14 +8,49 @@
 require_once("include/outils.php"); /*appel la fonction pour se connecter*/
 include("include/utilisateur.php");
 session_start();
+if(isset($_GET['IDobjet']))
+	{
+		global $bdd;
+		$p_requete = $bdd->prepare('SELECT Titre, image, ISBN, Resume from objet where objet.IDobjet =:ID');
+		$p_requete->execute(array('ID' => $_GET['IDobjet']));
+		if($requete = $p_requete->fetch()){
+			$Titre = $requete['Titre'];
+			$image = $requete['image'];
+			$ISBN = $requete['ISBN'];
+			$Resume = $requete['Resume'];
+		}
+
+		$p_requete2 = $bdd->prepare('SELECT Commentaire, etoiles from note where note.IDobjet =:ID');
+		$p_requete2->execute(array('ID' => $_GET['IDobjet']));
+		if($requete2 = $p_requete2->fetch()){
+			$commentaire = $requete2['Commentaire'];
+			$etoiles = $requete2['etoiles'];
+		}
+		else{
+			$commentaire = "Il n'y a pas encore de commentaire pour ce livre";
+			$etoiles = "Aucune étoile pour le moment";
+		}
+
+		$p_requete3 = $bdd->prepare('SELECT Nom from auteur, objet where auteur.IDauteur = objet.IDauteur AND objet.IDobjet = :ID');
+		$p_requete3->execute(array('ID' => $_GET['IDobjet']));
+		if($requete3 = $p_requete3->fetch()){
+			$Nom = $requete3['Nom'];
+		}
+
+		$p_requete4 = $bdd->prepare('SELECT Emprunté from reservation where reservation.IDobjet = :ID');
+		$p_requete4->execute(array('ID' =>$_GET['IDobjet']));
+		if($requete4 =$p_requete4->fetch()){
+			$emprunte = $requete4['Emprunté'];
+		}
+		else $emprunte = 0;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<title>Répertoire</title>
+<title><?php echo $Titre; ?></title>
 <link href="style/css/style.css" rel="stylesheet">
 <link href="style/css/bootstrap.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="style/css/foundation.css">
 <meta charset="utf-8"/>
 </head>
 <body>
@@ -51,82 +86,84 @@ article{
 <?php
 	echo menuConnexion();
 	echo Menu();
-echo '<a href="listelivre.php">&#8592; Retour liste des livres</a><br>';
-	if(isset($_GET['IDobjet']))
+?>
+<div class="ui main container" id="menu">
+	<div class="row">
+		<div class="callout">
+			<div class="row">
+				<div class="large-12 columns">
+					<h1> <?php echo $Titre; ?></h1>
+					<div class="large-4 columns">
+						<div id="image">
+							<img src="<?php echo $image;?>"style="width:200px;height:300px;">
+						</div>
+					</div>
+					<div class="large-8 columns">
+						<div id='info'>
+							<span>Auteur: <?php echo $Nom; ?></span><br />
+							<span>L'ISBN est : <?php echo $ISBN; ?></span><br>
+							<span>Résumé : <?php echo $Resume; ?></span><br>
 
-		{
-			global $bdd;
-			$p_requete = $bdd->prepare('SELECT Titre, image, ISBN, Resume from objet where objet.IDobjet =:ID');
-
-			$p_requete->execute(array('ID' => $_GET['IDobjet']));
-
-			$p_requete2 = $bdd->prepare('SELECT Commentaire, etoiles from note where note.IDobjet =:ID');
-
-			$p_requete2->execute(array('ID' => $_GET['IDobjet']));
-
-			if($code_ISBN = $p_requete->fetch()){
-				echo '<article>';
-				echo "<h1>Fiche de " . $code_ISBN['Titre'] . "</h1>";
-				echo '<div id="image">';
-				?>
-				<img src="<?php echo $code_ISBN['image'];?>"style="width:150px;height:300px;">
+							<div id='annexe'><p>Commentaire : <?php echo $commentaire; ?></p><br>
+								<p>Note : <?php echo $etoiles; ?></p><br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="row">
+						<div class="callout">
+							<div class="row">
+								<div class="large-12 columns">
 				<?php
-				echo "</div>";
-				echo "<div id='info'>";
-				echo "<p>L'ISBN est : " . $code_ISBN['ISBN'] . '</p><br>';
-				echo "<p>Résumé : " . $code_ISBN['Resume'] . '</p><br>';
-			}
-				if (estAdmin()){
-					if ($code_ISBN_Commentaire = $p_requete2->fetch()){
-						echo "<div id='annexe'><p>Commentaire : " . $code_ISBN_Commentaire['Commentaire'] . '</p><br>';
-						echo "<p>Note : " . $code_ISBN_Commentaire['etoiles']. '</p><br>';
-						echo '</div></div>';
+				if (estAdmin()){?>
+					<div class="large-6 columns"style="text-align:right;">
+						<form method="post"><input type="submit" name="supprimer" value="Supprimer">
+					</div>
+					<div class="large-6 columns" style="text-align:left;">
+						<?php if(!$emprunte){?>
+						<input type="submit" name="reserver" value="Réserver">
+						<?php }
+						else{
+							echo "Ce livre est déja réservé !";
+						}?>
+					</div>
+					<input type="hidden" name="IDobjet" value=" <?php echo $_GET["IDobjet"]; ?>"></form>
+					</div>
+					</article>
+					<?php
 				}
-				else {
-					echo "<div id='annexe'>Il n'y a pas encore de commentaire sur ce livre." . '<br>';
-					echo "Il n'y a pas de note sur ce livre.";
-					echo '</div></div>';
+			elseif (estConnecte()){?>
+				<div class="large-12 columns" style="text-align:center;">
+					<form method="post">
+						<?php if(!$emprunte){?>
+						<input type="submit" name="reserver" value="Réserver">
+						<?php }
+						else{
+							echo "Ce livre est déja réservé !";
+						}?>
+					<input type="hidden" name="IDobjet" value="<?php echo $_GET["IDobjet"]; ?>"></form>
+				</div>
+				<?php
+			}
+			}
 
-				}
-					echo '<form method="post"><input type="submit" name="supprimer" value="Supprimer"><input type="submit" name="reserver" value="Réserver">';
-					echo '<input type="hidden" name="IDobjet" value="' . $_GET["IDobjet"].'"></form>';
-					echo '</div>';
-					echo '</article>';
-				}
-			else if (estConnecte()){
-				if ($code_ISBN_Commentaire = $p_requete2->fetch()){
-					echo "<div id='annexe'><p>Commentaire : " . $code_ISBN_Commentaire['Commentaire'] . '</p><br>';
-					echo "<p>Note : " . $code_ISBN_Commentaire['etoiles']. '</p><br>';
-					echo '</div></div>';
-			}
-			else {
-				echo "<div id='annexe'>Il n'y a pas encore de commentaire sur ce livre." . '<br>';
-				echo "Il n'y a pas de note sur ce livre.";
-				echo '</div></div>';
-			}
-				echo '<form method="post"><input type="submit" name="reserver" value="Réserver">';
-				echo '<input type="hidden" name="IDobjet" value="'. $_GET["IDobjet"].'"></form>';
-				echo '</article>';
-			}
-			}
-		/*	else
+			else
 			{
 			echo 'Ne jouer pas avec les url';
-		}*/
-		if (isset($_POST['reserver'])){
-			$date = date("Y-m-d");
-			echo ($_GET['IDobjet'].' <br />');
-			echo ($_SESSION['code'].' <br />');
-			echo $date;
-			/*
-			$requete = $bdd->prepare('INSERT INTO reservation (IDobjet, IDutilisateur, Datedébut, Datefin, Emprunté, Rendu) VALUES (:IDobjet, :IDutilisateur, :Datedébut, :Datefin, 1, 0)');
-			$requete->execute(array(
-				'IDobjet' => $_GET['IDobjet'],
-				'IDutilisateur' => $_SESSION['code'],
-				'Datedébut' => $date,
-				'Datefin' => $date
-			));*/
 		}
+
+
+
+		if (isset($_POST['reserver'])){
+			$objet = $_GET['IDobjet'];
+			$utilisateur = $_SESSION['code'];
+			$date_plus = date("Y-m-d", strtotime('now +7 days'));
+			$date = date("Y-m-d");
+			global $bdd;
+			$reservation = $bdd->query("INSERT INTO reservation (IDobjet, IDutilisateur, Datedébut, Datefin, Emprunté) VALUES ($objet, $utilisateur, '$date', '$date_plus', 1)");
+		}
+		
 	if (estAdmin()){
 		if (isset($_GET['nouveau'])){
 			  echo '<title>Nouveau livre</title>
@@ -158,7 +195,7 @@ echo '<a href="listelivre.php">&#8592; Retour liste des livres</a><br>';
 			echo '<td><input type="text" name="resume" id="resume" value="' . $donnees['resume'] .'"></td>';
 			echo "</tr>\n";
 
-			echo '<label for="icone">Couverture du livre</label><br />
+			echo '<label for="icone">Couverture du livre</label>
 				<input type="file" name="icone" id="icone" /><br />';
 
 		  echo '<tr>';
@@ -175,6 +212,7 @@ if(isset($_GET['annuler'])){
   header('Location: listelivre.php');
   die();
 }
+/*
 if (isset($_POST['valider'])){
   $p_requete = $bdd->prepare('INSERT INTO auteur (Nom) VALUES (:nom)');
   $p_requete->execute(array(
@@ -189,9 +227,9 @@ if (isset($_POST['valider'])){
     'resume' => $_GET['resume']
   ));
 
-}
+}*/
 
-if (isset($_GET['supprimer'])){
+if (isset($_POST['supprimer'])){
 	$p_requete2 = $bdd->prepare('DELETE from appartient where appartient.IDobjet = :objet');
 	$p_requete2 -> execute(array('objet' => $_GET['IDobjet']));
 
@@ -204,7 +242,7 @@ if (isset($_GET['supprimer'])){
   $p_requete = $bdd->prepare('DELETE from objet where objet.IDobjet = :objet');
   $p_requete -> execute(array('objet' => $_GET['IDobjet']));
 
-  header('Location: listelivre.php?msg=Suppression bien effectuée !');
+	header('Location: listelivre.php?msg=Suppression bien effectuée !');
   die();
 }
 ?>

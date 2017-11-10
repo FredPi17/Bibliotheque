@@ -61,6 +61,178 @@
     return $tab;
   }
 
+	function listeCat($cat)
+	{
+		global $bdd ;
+		$echo = "<select id='cat1' name='cat1'>";
+		$p_reponse = $bdd->query("select IDcategorie, Libelle from categories");
+		while ($import = $p_reponse->fetch())
+		{
+			$echo .=  '<option value="' . $import['IDcategorie'] .'"';
+					if ($import['IDcategorie'] == $cat)
+						$echo.= 'selected="selected"';
+						$echo.='>'.$import['Libelle'].'</option>';
+		}
+		$echo .= '</select>';
+		return $echo;
+	}
+
+	function listeAuteur($auteur)
+	{
+		global $bdd ;
+		$echo = "<select id='auteur1' name='auteur1'>";
+		$p_reponse = $bdd->query("select Nom, IDauteur from auteur");
+		while ($import = $p_reponse->fetch())
+		{
+			$echo .=  '<option value="' . $import['IDauteur'] .'"';
+					if ($import['IDauteur'] == $auteur)
+						$echo.= 'selected="selected"';
+						$echo.='>'.$import['Nom'].'</option>';
+		}
+		$echo .= '</select>';
+		return $echo;
+	}
+
+	function nouveauLivre(){
+		$auteur = '';
+		$idAuthor = '';
+		$categorie = '';
+		global $bdd;
+		$upload = true;
+		if (isset($_GET['envoyer'])){
+			$last=$bdd->query('SELECT IDobjet from objet ORDER BY IDobjet DESC LIMIT 1');
+			while ($donnees = $last->fetch()){
+				$idObjet = $donnees['IDobjet'];
+			}
+			if ($idObjet == NULL){
+				$idObjet = 1;
+			}
+			else{
+				$idObjet += 1;
+			}
+
+
+		/* début vérification de la présence de auteur2 ou de auteur1 */
+		if($_GET['auteur2'] == NULL)
+		{
+		  $idAuthor = $_GET['auteur1'];
+			$auteur = '';
+			$import=$bdd->prepare('SELECT Nom from auteur where IDauteur = :auteur');
+			$import->execute(array(
+				'auteur' => $idAuthor
+			));
+			while($donnees = $import->fetch()){
+				$auteur = $donnees['Nom'];
+			}
+		}
+		else
+		{
+			$auteur = $_GET['auteur2'];
+			$idAuthor ='';
+			$last=$bdd->query('SELECT IDauteur from auteur ORDER BY IDauteur DESC LIMIT 1');
+			while ($donnees = $last->fetch()){
+					$idAuthor = $donnees['IDauteur'];
+				}
+				if ($idAuthor == NULL){
+					$idAuthor = 1;
+				}
+				else{
+					$idAuthor += 1;
+					$p_requeteAddAuthor = $bdd->prepare('INSERT INTO auteur (Nom, IDauteur) VALUES (:nom, :ID)');
+				 	$p_requeteAddAuthor->execute(array(
+						'nom' => $auteur,
+						'ID' => $idAuthor
+					));
+				}
+		}
+		/* fin de vérification */
+
+			/* On récupère le dernier IDauteur et on lui ajoute +1*/
+
+	}
+			/* Sinon on récupère le Nom qui correspond à $idAuthor*/
+
+		/* debut de vérification de la présence de cat2 ou de cat1 */
+		if($_GET['cat2'] == NULL)
+		{
+		  $idCategorie = $_GET['cat1'];
+			$import=$bdd->prepare('SELECT Libelle from categories where IDcategorie = :categorie');
+			$import->execute(array(
+				'categorie' => $idCategorie
+			));
+			while($donnees = $import->fetch()){
+				$categorie = $donnees['Libelle'];
+			}
+			$newCategorie = false;
+			$categorie = '';
+		}
+		else
+		{
+			$categorie = $_GET['cat2'];
+			$last=$bdd->query('SELECT IDcategorie from categories ORDER BY IDcategorie DESC LIMIT 1');
+			while ($donnees = $last->fetch()){
+				$idCategorie = $donnees['IDcategorie'];
+			}
+			if ($idCategorie == NULL){
+				$idCategorie = 1;
+			}
+			else{
+				$idCategorie += 1;
+			}
+			$p_requeteAddCat = $bdd->prepare('INSERT INTO categories (Libelle) VALUES (:libelle)');
+			$p_requeteAddCat->execute(array(
+				'libelle' => $categorie
+			));
+		}
+		/* fin de vérification  */
+		$AddAppartient = $bdd->prepare("INSERT INTO appartient (IDobjet, IDcategorie) VALUES (:IDobjet, :IDcategorie)");
+		$AddAppartient->execute(array(
+			'IDobjet' => $idObjet,
+			'IDcategorie' => $idCategorie
+		));
+
+		/* debut de vérification de la longueur de l'isbn, il doit faire 10 caracteres de long */
+		/* fin de vérification*/
+		if(strlen($_GET['titre']) < 3)
+		{
+		  echo"Vous n'avez pas rentré de titre";
+		  $upload = false;
+		}
+
+		$p_requeteAddBook = $bdd->prepare('INSERT INTO objet (/*image,*/ Resume, Titre, ISBN, IDauteur ) VALUES (/*:img,*/ :resume, :titre, :isbn, :IDauteur)');
+		$p_requeteAddBook->execute(array(
+			//'img' => $target_file,
+			'resume' => $_GET['resume'],
+			'titre' => $_GET['titre'],
+			'isbn' => $_GET['isbn'],
+			'IDauteur' => $idAuthor
+		));
+		/* Si le variable $upload est à vraie, on fait ceci */
+
+			/* Si $auteur_status est à vraie */
+
+
+/*
+		  $p_requeteSelectBook = $bdd->query('SELECT ISBN from objet');
+		  while ($ListISBN = $p_requeteSelectBook->fetch()) {
+		    if($ListISBN["ISBN"] == $_GET['isbn'])
+		    {
+		      $uploadBook = false;
+		    }
+		    else {
+		      $uploadBook = true;
+		    }
+		  }
+*/
+
+
+
+
+
+
+
+
+		  }
   /* -------------------- FONCTION FICHE LIVRE() ------------------ */
   /* A FAIRE ET INTRODUIRE ICI */
 

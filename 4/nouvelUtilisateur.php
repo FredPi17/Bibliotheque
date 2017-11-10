@@ -28,25 +28,37 @@ echo Menu();
 ?>
 <h1>Nouvel utilisateur</h1>
 <?php
-
   echo afficheFormNouveau();
 
+$id = $_GET['id'];
 if (isset($_POST['nouveau'])){
   $NewPassword = sha1($_POST['mdp'] . DB_SALT . strtolower($_POST['mail']));
-  $p_requete = $bdd->prepare('INSERT INTO utilisateur (MDP, Mail, Nom, Prenom, Admin) VALUES (:mdp, :mail, :nom, :prenom, :admin)');
+  $last=$bdd->query('SELECT IDutilisateur from utilisateur ORDER BY IDutilisateur DESC LIMIT 1');
+  while ($donnees = $last->fetch()){
+    $idUtilisateur = $donnees['IDutilisateur'];
+  }
+  if ($idUtilisateur == NULL){
+    $idUtilisateur = 1;
+  }
+  else{
+    $idUtilisateur += 1;
+  }
+  $p_requete = $bdd->prepare("INSERT INTO utilisateur (IDutilisateur, MDP, Mail, Nom, Prenom, Admin, image) VALUES (:IDutilisateur, :mdp, :mail, :nom, :prenom, :admin, 'image/default.png')");
   $p_requete->execute(array(
+    'IDutilisateur' => $idUtilisateur,
     'mdp' => $NewPassword,
     'mail' => $_POST['mail'],
     'nom' => $_POST['nom'],
     'prenom' => $_POST['prenom'],
     'admin' => $_POST['admin']
   ));
-  header('Location: ficheutilisateur.php?code='.$_POST['code']);
+  header("Location: ficheutilisateur.php?id=$id");
   die();
 }
 
+/*
 if(isset($_POST['retour'])){
-  header('Location: ficheutilisateur.php'.$_POST['code']);
+  header("Location: ficheutilisateur.php?id=$id");
   die();
-}
+}*/
 ?>

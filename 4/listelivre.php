@@ -20,6 +20,7 @@ if (isset($_POST['inscription'])) {
 	  <link href="style/css/style.css" rel="stylesheet">
 	  <link rel="stylesheet" href="style/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/css/listelivre.css">
+    <link rel="stylesheet" href="style/css/foundation.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	  <!-- /**Le jquery ne se trouve pas dans le download boot strap on est obligé de le récupérer enligne!*/-->
 	  <script src="js/bootstrap.min.js"></script>
@@ -35,9 +36,11 @@ if(isset($_GET['msg'])){
 }
 
 try {
-	echo '<h1>Liste des livres</h1>'."\n";/*le titre*/
-	echo '<table>'."\n"; /*ouvre le tableau*/
-	echo '<tr><th>Image</th><th>Auteur</th><th>Titre</th>' ."\n";/*nom des colonnes*/
+	echo '<div class="row medium-up-1 small-up-1 large-up-1">
+          <div class="column">
+            <h1>Liste des livres</h1>'."\n";
+	echo       '<table>'."\n"; /*ouvre le tableau*/
+	echo         '<tr><th>Image</th><th>Auteur</th><th>Titre</th>' ."\n";/*nom des colonnes*/
 	$reponse = $bdd->query('SELECT image, objet.IDobjet as IDobjet, auteur.Nom, objet.Titre, objet.image from objet, auteur where auteur.IDauteur = objet.IDauteur');
 	// On affiche chaque entrée une à une
 
@@ -62,7 +65,7 @@ try {
   }
   echo '</form>';
 	$reponse->closeCursor(); // Termine le traitement de la requête
-	echo '</table>';
+	echo '</table></div></div>';
 } catch(Exception $e) {
 	// En cas d'erreur précédemment, on affiche un message et on arrête tout
 	die('Erreur : '.$e->getMessage());
